@@ -1,0 +1,46 @@
+// custom shader for RedShift
+{
+  "name": "RS Uber",  // menu name
+  "op_name": "rs_uber", // operator type
+  "context": "shop",  // operator context (shop/vop)
+  "parameters_map": {
+    "diffuse_color": "diffCol",
+    "diffuse_weight": "diffuse_weight",
+    "diffuse_roughness": "diffuse_roughness",
+    "diffuse_map": "diff",
+    "specular_color": "specCol",
+    "specular_weight": "refl_weight",
+    "specular_roughness": "refl_roughness",
+    "specular_map": "spec",
+    "specular_ior": "ior",
+    "specular_anisotropy": "refl_aniso",
+    "opacity_weight": "opacity",
+    "refract_color": "refr_color",
+    "refract_weight": "refr_weight",
+    "refract_roughness": "refr_roughness",
+    "refract_ior": "refr_abbe",
+    "refract_dispersion": "refr_abbe",
+    "refract_thin_walled": "refr_thin_walled",
+    "sss_amount": "ms_amount",
+    "sss_radius": "ms_radius_scale",
+    "sss_color1": "ms_color0",
+    "sss_radius1": "ms_radius0",
+    "sss_weight1": "ms_weight0",
+    "sss_color2": "ms_color1",
+    "sss_radius2": "ms_radius1",
+    "sss_weight2": "ms_weight1",
+    "sss_color3": "ms_color2",
+    "sss_radius3": "ms_radius2",
+    "sss_weight3": "ms_weight2",
+    "emission_color": "emission_color",
+    "emission_weight": "emission_weight",
+    "bump_scale": "scale",
+    "bump_map": "bump",
+    "use_bump": "useBump"
+  },
+  // use "$value" to replace import\export value
+  "set_value_expr":{   // when shader created from universal map
+  },
+  "get_value_expr": {  // when shader convert to universal map
+  }
+}

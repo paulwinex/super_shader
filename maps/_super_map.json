@@ -1,0 +1,61 @@
+{
+  // PARAMETER NAME         TYPE               DEFAULT
+  // diffuse
+  "diffuse_color":          {"type":  "vec",   "def": [1, 1, 1]  },
+  "diffuse_map":            {"type":  "str",   "def": ""         },
+  "diffuse_weight":         {"type":  "flt",   "def": 1          },
+  "diffuse_weight_map":     {"type":  "str",   "def": ""         },
+  "diffuse_roughness":      {"type":  "flt",   "def": 0          },
+  "diffuse_roughness_map":  {"type":  "flt",   "def": ""         },
+  // ambient
+  "ambient_color":          {"type":  "vec",   "def": [0, 0, 0]  },
+  "ambient_map":            {"type":  "str",   "def": ""         },
+  "ambient_weight":         {"type":  "flt",   "def": 1          },
+  "ambient_weight_map":     {"type":  "str",   "def": ""         },
+  // specular
+  "specular_color":		    {"type": "vec",    "def": [0, 0, 0]  },
+  "specular_map":		    {"type": "str",    "def": ""         },
+  "specular_weight":	    {"type": "flt",    "def": 0.5        },
+  "specular_weight_map":    {"type": "str",    "def": ""         },
+  "specular_roughness":	    {"type": "flt",    "def": 0          },
+  "specular_roughness_map": {"type": "str",    "def": ""         },
+  "specular_ior":		    {"type": "flt",    "def": 1.5        },
+  "specular_anisotropy":    {"type": "flt",    "def": 0          },
+  "metallic_weight":	    {"type": "flt",    "def": 0          },
+  "metallic_map":		    {"type": "str",    "def": ""         },
+  // refraction
+  "refract_color":		    {"type": "vec",    "def": [0, 0, 0]   },
+  "refract_weight":		    {"type": "flt",    "def": 0           },
+  "refract_roughness":	    {"type": "flt",    "def": 0           },
+  "refract_ior":		    {"type": "flt",    "def": 1.5         },
+  "refract_dispersion":	    {"type": "flr",    "def": 0           },
+  "refract_thin_walled":    {"type": "bool",   "def": false       },
+  // opacity
+  "opacity_color":          {"type": "vec",    "def": [1, 1, 1]   },
+  "opacity_map":            {"type": "str",    "def": ""          },
+  "opacity_weight":         {"type": "flt",    "def": 0           },
+  "opacity_weight_map":     {"type": "str",    "def": ""          },
+  // sss
+  "sss_amount":			    {"type": "flt",    "def": 0           },
+  "sss_radius":			    {"type": "flt",    "def": 1           },
+  "sss_color1":			    {"type": "vec",    "def": [0, 0, 0]   },
+  "sss_radius1":		    {"type": "flt",    "def": 0           },
+  "sss_weight1":		    {"type": "flt",    "def": 0           },
+  "sss_color2":			    {"type": "vec",    "def": [0, 0, 0]   },
+  "sss_radius2":		    {"type": "flt",    "def": 0           },
+  "sss_weight2":		    {"type": "flt",    "def": 0           },
+  "sss_color3":			    {"type": "vec",    "def": [0, 0, 0]   },
+  "sss_radius3":		    {"type": "flt",    "def": 0           },
+  "sss_weight3":		    {"type": "flt",    "def": 0           },
+  // emission
+  "emission_color":		    {"type": "vec",    "def": [0, 0, 0]   },
+  "emission_map": 		    {"type": "str",    "def": ""          },
+  "emission_weight":	    {"type": "flt",    "def": 0           },
+  "emission_weight_map":    {"type": "str",    "def": ""          },
+  // bump & displace
+  "bump_scale":			    {"type": "flt",    "def": 1           },
+  "bump_map":			    {"type": "str",    "def": ""          },
+  "displace_height":	    {"type": "flt",    "def": 1           },
+  "displace_map":		    {"type": "str",    "def": ""          }
+}
+
