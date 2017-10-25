@@ -25,8 +25,12 @@ def remap_parm(node, parm_name, get_value=True):
         'emission_map': 'emsf',
         'use_emission_map': 'emsf',
         'specular_roughness': 'shn',
+        'specular_roughness_map': 'shn',
+        'use_specular_roughness_map': 'shn',
         'bump_map': 'bump',
         'use_bump_map': 'bump',
+        'normal_map': 'nml',
+        'use_normal_map': 'nml',
         }
     if get_value:
         # get_value

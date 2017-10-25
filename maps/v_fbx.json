@@ -30,7 +30,8 @@
     "specular_weight": "refl_mult",
     "specular_weight_map": ":remap_parm",
     "specular_roughness": "shininess",
-    "specular_roughness_map": null,
+    "specular_roughness_map": ":remap_parm",
+    "use_specular_roughness_map": ":remap_parm",
     "specular_ior": null,
     "specular_anisotropy": null,
     "metallic_weight": null,
@@ -71,6 +72,8 @@
     "bump_scale": null,
     "bump_map": ":remap_parm",
     "use_bump_map": ":remap_parm",
+    "normal_map": ":remap_parm",
+    "use_normal_map": ":remap_parm",
     "displace_height": null,
     "displace_map":	null,
     "use_displace_map":	null

@@ -26,6 +26,7 @@
   "use_specular_weight_map":   {"type": "bol",    "default": false       },
   "specular_roughness":	       {"type": "flt",    "default": 0           },
   "specular_roughness_map":    {"type": "str",    "default": ""          },
+  "use_specular_roughness_map":{"type": "bol",    "default": false       },
   "specular_ior":		       {"type": "flt",    "default": 1.5         },
   "specular_anisotropy":       {"type": "flt",    "default": 0           },
   "metallic_weight":	       {"type": "flt",    "default": 0           },
@@ -68,6 +69,8 @@
   "bump_scale":			       {"type": "flt",    "default": 1           },
   "bump_map":			       {"type": "str",    "default": ""          },
   "use_bump_map":              {"type": "bol",    "default": false       },
+  "normal_map":             {"type": "str",    "default": ""          },
+  "use_normal_map":              {"type": "bol",    "default": false       },
   "displace_height":	       {"type": "flt",    "default": 1           },
   "displace_map":		       {"type": "str",    "default": ""          },
   "use_displace_map":          {"type": "bol",    "default": false       }
