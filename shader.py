@@ -103,7 +103,6 @@ class SuperShader(object):
         value = self._apply_expression(value, super_name)
         value = self.convert_type(value, value_type)
         if p:
-            # print value_type, value, p
             p.set(self._apply_expression(value, super_name))
             return True
         else:
