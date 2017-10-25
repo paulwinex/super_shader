@@ -22,6 +22,7 @@ def convert(replace=False):
             continue
 
         # get parent
+        refs = node.parmsReferencingThis()
         parent = None
         if node.type().name() == 'material':
             # it is FBX subnet?
@@ -42,7 +43,7 @@ def convert(replace=False):
             continue
         # create
         # super shader 2
-        new_shader = parent.createNode(new_shader_type)
+        new_shader = parent.createNode(new_shader_type, node_name=node.name()+'_new')
         try:
             super_new_shader = super_shader.SuperShader(new_shader)
         except Exception as e:
@@ -51,8 +52,8 @@ def convert(replace=False):
         # copy
         super_node.copy_parms_to(super_new_shader)
         if replace:
-            # todo: replace old shader to new
-            pass
+            for r in refs:
+                r.set(new_shader.path())
         new_nodes.append(super_new_shader)
     if errors:
         hou.ui.displayMessage('\n'.join(errors), severity=hou.severityType.Warning)
