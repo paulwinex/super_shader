@@ -1,22 +1,24 @@
 {
+  // map for default FBX material
   "name": "FBX Surface",      // menu name
   "op_name": "v_fbx",         // operator type
   "context": "shop",          // operator context
   "remap_module": "v_fbx",    // function to dynamically remap
 
   "parameters_map": {
-    "diffuse_color": "Cd",
-    "diffuse_weight": "diffuse_mult",
-    "diffuse_map": ":remap_parm||map1", // user function from module OR default value
-    "diffuse_weight_map": null,
+    // diffuse
+    "diffuse_color": "Cd",              // direct copy value (with expression if exists)
+    "diffuse_weight": "diffuse_mult",   // user function from module OR default value from super_map
+    "diffuse_map": ":remap_parm||map1", // use function from module OR default value from parameter or super_map
+    "diffuse_weight_map": null,         // parameter not supported of shader. You can skip this line.
     "diffuse_roughness": null,
     "diffuse_roughness_map": null,
-
+    // ambient
     "ambient_color": "Ca",
     "ambient_map": ":remap_parm",
     "ambient_weight": "ambient_mult",
     "ambient_weight_map": ":remap_parm",
-
+    // specular
     "specular_color": "refl",
     "specular_map": ":remap_parm",
     "specular_weight": "refl_mult",
@@ -27,19 +29,19 @@
     "specular_anisotropy": null,
     "metallic_weight": null,
     "metallic_map": null,
-
+    // refraction
     "refract_color": null,
     "refract_weight": null,
     "refract_roughness": null,
     "refract_ior": null,
     "refract_dispersion": null,
     "refract_thin_walled": null,
-
+    // opacity
     "opacity_color": "opacity",
     "opacity_map": ":remap_parm",
     "opacity_weight": ":remap_parm||opacity_mult",
     "opacity_weight_map": null,
-
+    // subsurface scattering
     "sss_amount": null,
     "sss_radius": null,
     "sss_color1": null,
@@ -51,12 +53,12 @@
     "sss_color3": null,
     "sss_radius3": null,
     "sss_weight3": null,
-
+    // emission
     "emission_color": ":remap_parm||Ce",
     "emission_map": null,
     "emission_weight": "emission_mult",
     "emission_weight_map": ":remap_parm||emission_mult",
-
+    // bump and displace
     "bump_scale": null,
     "bump_map": ":remap_parm",
     "displace_height": null,
@@ -64,11 +66,11 @@
   },
 
   "set_value_expr":{
-    // when shader created from universal map
+    // used when you set parameter value to super shader
     "specular_roughness": "int((1-$value)*100)"
   },
   "get_value_expr": {
-    // when shader converted to universal map
+    // used when you get parameter value from super shader
     "specular_roughness": "round(1-($value*0.01), 3)"
   }
 }

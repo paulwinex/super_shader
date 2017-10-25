@@ -1,3 +1,6 @@
+"""
+Function for Houdini FBX material. Get layer map on FBX Surface Shader (v_fbx) be parameter name.
+"""
 
 
 def remap_parm(node, parm_name, get_value=True):

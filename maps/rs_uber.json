@@ -1,6 +1,6 @@
-// custom shader for RedShift
+// map for custom asset
 {
-  "name": "RS Uber",  // menu name
+  "name": "RedShift Uber",  // menu name
   "op_name": "rs_uber", // operator type
   "context": "shop",  // operator context (shop/vop)
   "parameters_map": {
@@ -38,9 +38,6 @@
     "bump_map": "bump",
     "use_bump": "useBump"
   },
-  // use "$value" to replace import\export value
-  "set_value_expr":{   // when shader created from universal map
-  },
-  "get_value_expr": {  // when shader convert to universal map
-  }
+  "set_value_expr":{},
+  "get_value_expr": {}
 }
