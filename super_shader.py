@@ -91,7 +91,11 @@ class SuperShader(object):
     def _apply_expression(self, value, super_parm_name, set_value=True):
         expr = self._map.get('set_value_expr' if set_value else 'get_value_expr', {}).get(super_parm_name)
         if expr:
-            value = eval(expr.replace('$value', str(value)))
+            if isinstance(value, (str, unicode)):
+                value = "%s" % value
+            else:
+                value = str(value)
+            value = eval(expr.replace('$value', value))
         return value
 
     def _get_from_method_or_default(self, method, super_parm, default_parm=None, get_value=True):
@@ -105,7 +109,7 @@ class SuperShader(object):
             return res
 
     def _super_map_default(self, super_parm):
-        return self._super_map[super_parm]['def']
+        return self._super_map[super_parm]['default']
 
     def _get_from_node_parameter(self, parm_name, super_parm_name):
         p = self._node.parm(parm_name) or self._node.parmTuple(parm_name)
@@ -175,100 +179,11 @@ class SuperShader(object):
     def maps_folder():
         return os.path.join(os.path.dirname(__file__), 'maps').replace('\\', '/')
 
-##############
+    def all_super_parm_names(self):
+        return self._super_map.keys()
 
     def copy_parms_to(self, other):
-        for parm_name in self._super_map.keys():
+        for parm_name in self.all_super_parm_names():
             p = other.parm(parm_name)
             if p:
                 p.set(self.parm(parm_name).get())
-            else:
-                print 'Skip %s' % parm_name
-
-    def to_shader(self, op_map, parent):
-        """
-        Create new shader from current universal map
-        :param op_map: new operator map
-        :param parent: parent: node
-        :return: new shader
-        """
-        if False:
-            parent = hou.node('/')
-        # create node
-        shader = parent.createNode(op_map['op_name'])
-        # copy parameters
-        for super_parm_name, shader_parm_name in op_map.get('parameters_map').items():
-            new_value = self.super_map.get(super_parm_name)
-            if new_value is None:
-                continue
-            parm = shader.parm(shader_parm_name)
-            if parm:
-                parm.set(new_value)
-            else:
-                parm = shader.parmTuple(shader_parm_name)
-                if parm:
-                    if isinstance(new_value, (int, float)):
-                        new_value = (new_value, new_value, new_value)
-                    parm.set(hou.Vector3(*new_value))
-                else:
-                    print 'Parameter not found: %s' % shader_parm_name
-            if not parm:
-                continue
-            parm.set(new_value)
-        # fix paths
-        for parm in self._node.parmsReferencingThis():
-            parm.set(shader.path())
-        for parm in self._node.parent().parmsReferencingThis():
-            parm.set(shader.parent().path())
-        return shader
-
-    def to_super_map(self):
-        """
-        Return universal map from current mode if remap exists
-        :return: 
-        """
-        universal_map = self._get_super_map()
-        super_map = {}
-        for p_name, p_type, p_def in [(universal_map[i], universal_map[i + 1], universal_map[i + 2]) for i in range(0, len(universal_map), 3)]:
-            # get current shader parameter name
-            node_parm_name = self._map['parameters_map'].get(p_name)
-            if not node_parm_name:
-                continue
-            # get current value
-            value = None
-            m = re.match(r"^:(\w+)\|\|(\w+)$", node_parm_name)
-            if m:
-                # it is method with default from node parm
-                method, default_parm = m.groups()
-                method = self._load_method(method)
-                value = method(p_name)
-                if value is None:
-                    parm = self._node.parm(default_parm) or self._node.parmTuple(default_parm)
-                    if parm:
-                        value = parm.eval()
-                    else:
-                        raise Exception('Node %s have not parameter %s' % (self._node.path(), default_parm))
-            if value is None:
-                m = re.match(r"^:(\w+)$", node_parm_name)
-                if m:
-                    # it is method with default value from universal map defaults
-                    method = m.group(1)
-                    method = self._load_method(method)
-                    value = method(p_name)
-                    if value is None:
-                        value = p_def
-                    else:
-                        logger.warning('Skip value %s' % p_name)
-            if self._node.parm(node_parm_name):
-                # it is simple read value from node
-                value = self._node.parm(node_parm_name).eval()
-            # save value to map
-            if value is not None:
-                # write to super map
-                expr = self._map.get('export_value_expr', {}).get(p_name)
-                if expr:
-                    # eval export expression if exists
-                    node = self._node
-                    value = eval(expr.replace('$value', str(value)))
-                super_map[p_name] = value
-        return super_map
