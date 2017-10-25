@@ -8,10 +8,12 @@
     "diffuse_weight": "diffuse_weight",
     "diffuse_roughness": "diffuse_roughness",
     "diffuse_map": "diff",
+    "use_diffuse_map": "useDiff",
     "specular_color": "specCol",
     "specular_weight": "refl_weight",
     "specular_roughness": "refl_roughness",
     "specular_map": "spec",
+    "use_specular_map": "useSpec",
     "specular_ior": "ior",
     "specular_anisotropy": "refl_aniso",
     "opacity_weight": "opacity",
@@ -36,8 +38,12 @@
     "emission_weight": "emission_weight",
     "bump_scale": "scale",
     "bump_map": "bump",
-    "use_bump": "useBump"
+    "use_bump_map": "useBump"
   },
-  "set_value_expr":{},
-  "get_value_expr": {}
+  "set_value_expr":{
+//    "use_diffuse_map": "bool($value)"
+  },
+  "get_value_expr": {
+//    "use_diffuse_map": "bool($value)"
+  }
 }

@@ -99,17 +99,47 @@ class SuperShader(object):
         :return: success bool
         """
         p = self._node.parm(parm_name)
+        value_type = self._super_map.get(super_name).get('type')
+        value = self._apply_expression(value, super_name)
+        value = self.convert_type(value, value_type)
         if p:
+            # print value_type, value, p
             p.set(self._apply_expression(value, super_name))
             return True
         else:
             p = self._node.parmTuple(parm_name)
             if p:
-                r = self._apply_expression(value, super_name)
-                print '%s > %s' % (super_name, r)
-                p.set(hou.Vector3(*r))
+                # value should be list or tuple
+                p.set(hou.Vector3(*value))
                 return True
         return False
+
+    def convert_type(self, value, type):
+        if type == 'vec':
+            if not isinstance(value, (list, tuple)) or not len(value) == 3:
+                raise Exception('Wrong value for type %s: %s' % (type, value))
+            return list(value)
+        elif type == 'flt':
+            try:
+                return float(value)
+            except:
+                raise Exception('Wrong value for type %s: %s' % (type, value))
+        elif type == 'int':
+            try:
+                return int(value)
+            except:
+                raise Exception('Wrong value for type %s: %s' % (type, value))
+        elif type == 'bol':
+            try:
+                return bool(value)
+            except:
+                raise Exception('Wrong value for type %s: %s' % (type, value))
+        elif type == 'str':
+            if isinstance(value, (str, unicode)):
+                return str(value)
+            else:
+                raise Exception('Wrong value for type %s: %s' % (type, value))
+
 
     def _apply_expression(self, value, super_parm_name, set_value=True):
         """
@@ -122,7 +152,7 @@ class SuperShader(object):
         expr = self._map.get('set_value_expr' if set_value else 'get_value_expr', {}).get(super_parm_name)
         if expr:
             if isinstance(value, (str, unicode)):
-                value = "%s" % value
+                value = '"%s"' % value
             else:
                 value = str(value)
             value = eval(expr.replace('$value', value))
@@ -176,7 +206,9 @@ class SuperShader(object):
         """
         map_file = os.path.join(cls.maps_folder(), '_super_map.json')
         if not os.path.exists(map_file):
-            raise Exception('Super Map not found: %s' % map_file)
+            map_file = os.path.join(cls.maps_folder(), '_super_map_example.json')
+            if not os.path.exists(map_file):
+                raise Exception('Super Map not found: %s' % map_file)
         try:
             return cls.read_json(map_file)
         except Exception as e:
@@ -197,7 +229,9 @@ class SuperShader(object):
                 try:
                     map = cls.read_json(os.path.join(maps_folder, f))
                     json_maps.append(map)
+
                 except:
+                    print 'Error read map file: %s' % f
                     logger.error('Error read map file: %s' % f)
         return json_maps
 
@@ -269,4 +303,9 @@ class SuperShader(object):
         for parm_name in self.all_super_parm_names():
             p = other.parm(parm_name)
             if p:
-                p.set(self.parm(parm_name).get())
+                src = self.parm(parm_name)
+                if src:
+                    value = src.get()
+                else:
+                    value = self._super_map_default(parm_name)
+                p.set(value)
