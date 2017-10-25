@@ -2,8 +2,8 @@ import shader_converter
 reload(shader_converter)
 
 """
-LieftClick - create new shader, copy parameters and replace references
-Ctrl + LeftCLick - Just Create and Copy parameters (for tests)
+LieftClick - create new shader, copy parameters and replace old shader
+Ctrl + LeftCLick - just create shader and copy parameters (for tests)
 """
 
 if kwargs['ctrlclick']:
