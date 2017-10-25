@@ -4,6 +4,7 @@
   "op_name": "v_fbx",         // operator type
   "context": "shop",          // operator context
   "remap_module": "v_fbx",    // function to dynamically remap
+  "allow_creation": false,    // enable create node this type from super shader. Default false
 
   "parameters_map": {
     // diffuse

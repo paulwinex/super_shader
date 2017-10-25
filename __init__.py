@@ -94,7 +94,8 @@ def open_new_shader_menu():
     menu = QMenu(hou.ui.mainQtWindow())
     menu.setStyleSheet(hou.ui.qtStyleSheet())
     for m in maps:
-        menu.addAction(QAction(m['name'], menu))
+        if m.get('allow_creation'):
+            menu.addAction(QAction(m['name'], menu))
     act = menu.exec_(QCursor.pos())
     if not act:
         return

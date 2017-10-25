@@ -3,6 +3,7 @@
   "name": "RedShift Uber",  // menu name
   "op_name": "rs_uber", // operator type
   "context": "shop",  // operator context (shop/vop)
+  "allow_creation": true,
   "parameters_map": {
     "diffuse_color": "diffCol",
     "diffuse_weight": "diffuse_weight",
