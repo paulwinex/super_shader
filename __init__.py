@@ -7,6 +7,11 @@ reload(super_shader)
 
 
 def convert(replace=False):
+    """
+    Convert selected nodes to a new shaders via super shader
+    :param replace: replace existing references to new shader
+    :return: 
+    """
     nodes = hou.selectedNodes()
     if not nodes:
         return
@@ -65,6 +70,10 @@ def convert_and_replace():
 
 
 def open_new_shader_menu():
+    """
+    Open menu using QMenu with all maps
+    :return: 
+    """
     try:
         from PySide.QtGui import QMenu, QAction, QCursor
     except:

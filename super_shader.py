@@ -39,10 +39,20 @@ class SuperShader(object):
         self._super_map = self._get_super_map()
 
     def parm(self, node_parm_name):
+        """
+        Get super parm by name
+        :param node_parm_name: super name 
+        :return: Parm
+        """
         if node_parm_name in self._map['parameters_map']:
             return self.Parm(node_parm_name, self.__get_parm_value, self.__set_parm_value)
 
     def __get_parm_value(self, super_name):
+        """
+        Get value callback
+        :param super_name: super name 
+        :return: value
+        """
         if super_name in self._map['parameters_map']:
             node_parm_name = self._map['parameters_map'].get(super_name)
             if not node_parm_name:
@@ -58,6 +68,12 @@ class SuperShader(object):
             return self._apply_expression(self._super_map_default(super_name), super_name, False)
 
     def __set_parm_value(self, super_name, value):
+        """
+        Set value callback
+        :param super_name: super name 
+        :param value: new value
+        :return: True or False
+        """
         if super_name in self._map['parameters_map']:
             node_parm_name = self._map['parameters_map'].get(super_name)
             if not node_parm_name:
@@ -75,6 +91,13 @@ class SuperShader(object):
         return False
 
     def __set_node_value(self, parm_name, value, super_name):
+        """
+        Set value to original node
+        :param parm_name: node parm name
+        :param value: new value
+        :param super_name: super name
+        :return: success bool
+        """
         p = self._node.parm(parm_name)
         if p:
             p.set(self._apply_expression(value, super_name))
@@ -89,6 +112,13 @@ class SuperShader(object):
         return False
 
     def _apply_expression(self, value, super_parm_name, set_value=True):
+        """
+        Apply parameter expression
+        :param value: value
+        :param super_parm_name: super name 
+        :param set_value: set value or get value mode
+        :return: new value
+        """
         expr = self._map.get('set_value_expr' if set_value else 'get_value_expr', {}).get(super_parm_name)
         if expr:
             if isinstance(value, (str, unicode)):
@@ -99,6 +129,14 @@ class SuperShader(object):
         return value
 
     def _get_from_method_or_default(self, method, super_parm, default_parm=None, get_value=True):
+        """
+        Execute method
+        :param method: method name 
+        :param super_parm: super name
+        :param default_parm: default node parm name
+        :param get_value: get value or set value (bool)
+        :return: 
+        """
         m = self._load_method(method)
         res = m(self._node, super_parm, get_value)
         if res is None:
@@ -109,9 +147,20 @@ class SuperShader(object):
             return res
 
     def _super_map_default(self, super_parm):
+        """
+        Return default value from super map
+        :param super_parm: super name
+        :return: 
+        """
         return self._super_map[super_parm]['default']
 
     def _get_from_node_parameter(self, parm_name, super_parm_name):
+        """
+        Return value from node
+        :param parm_name: node parm name
+        :param super_parm_name: super name (for default value)
+        :return: 
+        """
         p = self._node.parm(parm_name) or self._node.parmTuple(parm_name)
         if not p:
             logger.error('Parameter not found %s.%s' % (self.op_name, parm_name))
@@ -121,6 +170,10 @@ class SuperShader(object):
 
     @classmethod
     def _get_super_map(cls):
+        """
+        Return super map
+        :return: dict
+        """
         map_file = os.path.join(cls.maps_folder(), '_super_map.json')
         if not os.path.exists(map_file):
             raise Exception('Super Map not found: %s' % map_file)
@@ -131,6 +184,10 @@ class SuperShader(object):
 
     @classmethod
     def _get_maps(cls):
+        """
+        Return list of all existing maps
+        :return: [{},...]
+        """
         maps_folder = cls.maps_folder()
         json_maps = []
         for f in os.listdir(maps_folder):
@@ -145,6 +202,11 @@ class SuperShader(object):
         return json_maps
 
     def _load_method(self, name):
+        """
+        Load module by name
+        :param name: module name
+        :return: object
+        """
         mod_name = self._map.get('remap_module')
         if not mod_name:
             raise Exception('Remap module not defined')
@@ -163,6 +225,12 @@ class SuperShader(object):
 
     @classmethod
     def read_json(cls, path, **kwargs):
+        """
+        Read commented JSON
+        :param path: file path
+        :param kwargs: 
+        :return: object
+        """
         regex = r'\s*(#|\/{2}).*$'
         regex_inline = r'(:?(?:\s)*([A-Za-z\d\.{}]*)|((?<=\").*\"),?)(?:\s)*(((#|(\/{2})).*)|)$'
         lines = open(path).readlines()
@@ -177,12 +245,27 @@ class SuperShader(object):
 
     @staticmethod
     def maps_folder():
+        """
+        Return path to maps folder
+        :return: str 
+        """
         return os.path.join(os.path.dirname(__file__), 'maps').replace('\\', '/')
 
     def all_super_parm_names(self):
+        """
+        Return all parameter names from super map
+        :return: list
+        """
         return self._super_map.keys()
 
     def copy_parms_to(self, other):
+        """
+        Copy parameters from current super shader to other
+        :param other: SuperShader
+        :return: 
+        """
+        if not isinstance(other, SuperShader):
+            raise Exception('You should pass SuperShader instance only')
         for parm_name in self.all_super_parm_names():
             p = other.parm(parm_name)
             if p:
