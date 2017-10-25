@@ -2,8 +2,7 @@
 act={name:Convert_shader,action:convert()}
 '''
 import hou
-import super_shader
-reload(super_shader)
+from shader import SuperShader
 
 
 def convert(replace=False):
@@ -42,7 +41,7 @@ def convert(replace=False):
             parent = hou.node('/%s' % new_shader_map.get('context', 'shop').lower().replace('vop', 'mat'))
         # super shader 1
         try:
-            super_node = super_shader.SuperShader(node)
+            super_node = SuperShader(node)
         except Exception as e:
             errors.append(str(e))
             continue
@@ -50,7 +49,7 @@ def convert(replace=False):
         # super shader 2
         new_shader = parent.createNode(new_shader_type, node_name=node.name()+'_new')
         try:
-            super_new_shader = super_shader.SuperShader(new_shader)
+            super_new_shader = SuperShader(new_shader)
         except Exception as e:
             errors.append(str(e))
             continue
@@ -79,7 +78,7 @@ def open_new_shader_menu():
     except:
         from PySide2.QtGui import QCursor
         from PySide2.QtWidgets import QMenu, QAction
-    maps = super_shader.SuperShader._get_maps()
+    maps = SuperShader._get_maps()
     if not maps:
         return
     menu = QMenu(hou.ui.mainQtWindow())

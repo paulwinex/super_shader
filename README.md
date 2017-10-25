@@ -156,7 +156,7 @@ _используем символ `||` (или)_
 Готовый код для быстрого преобразования выделенных нод
 
 ```python
-import shader_converter
+import super_shader
 
 """
 LieftClick - create new shader, copy parameters and replace old shader
@@ -165,10 +165,10 @@ Ctrl + LeftCLick - just create shader and copy parameters (for tests)
 
 if kwargs['ctrlclick']:
     # just convert
-    shader_converter.convert()
+    super_shader.convert()
 else:
     # convert and replace
-    shader_converter.convert_and_replace()
+    super_shader.convert_and_replace()
 ```
 
 Данный код поместите в кнопку на полку. После нажатия на кнопку появится меню с выбором типа в который нужно преобразовать выделенные ноды.
