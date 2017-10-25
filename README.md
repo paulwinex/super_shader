@@ -127,10 +127,12 @@ _используем символ `||` (или)_
 ```json
 {
  "set_value_expr":{
-    "specular_roughness": "int((1-$value)*100)" // complement and multiply by 100
+    "":"complement and multiply by 100",
+    "specular_roughness": "int((1-$value)*100)" 
   },
   "get_value_expr": {
-    "specular_roughness": "round(1-($value*0.01), 3)" // divide by 100, complement and round
+    "":"divide by 100, complement and round",
+    "specular_roughness": "round(1-($value*0.01), 3)"
   }
 }
 ```
